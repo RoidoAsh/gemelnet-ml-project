@@ -9,11 +9,13 @@ Data Mining course project (2026): classification and clustering of Israeli prov
 1. **Classification:** end-to-end pipeline (preprocessing, feature engineering, hyperparameter optimization, evaluation) comparing at least 5 models.
 2. **Clustering:** discover risk-return profiles of funds, comparing at least 3 models.
 
+Project plan and deadlines: [TIMELINE.md](TIMELINE.md)
+
 ## Structure
 
 ```
-data/raw/        original CSVs from data.gov.il (not committed)
-data/processed/  cleaned datasets (not committed)
+data/raw/        original CSVs from data.gov.il
+data/processed/  cleaned datasets
 notebooks/       exploration and modeling notebooks
 src/             reusable code
 reports/         proposal, figures and final report

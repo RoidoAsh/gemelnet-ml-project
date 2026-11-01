@@ -1,7 +1,3 @@
-# Data (downloaded from data.gov.il)
-data/raw/
-data/processed/
-
 # Python
 __pycache__/
 *.pyc
