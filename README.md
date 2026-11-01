@@ -9,6 +9,15 @@ Data Mining course project (2026): classification and clustering of Israeli prov
 1. **Classification:** end-to-end pipeline (preprocessing, feature engineering, hyperparameter optimization, evaluation) comparing at least 5 models.
 2. **Clustering:** discover risk-return profiles of funds, comparing at least 3 models.
 
+## Setup
+
+Python 3.13 with the libraries in [requirements.txt](requirements.txt):
+
+```
+pip install -r requirements.txt
+jupyter notebook
+```
+
 ## Structure
 
 ```
