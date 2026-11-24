@@ -12,3 +12,6 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# GenAI-marked copy of the proposal (kept locally only)
+reports/proposal/proposal_genai_marked.pdf
