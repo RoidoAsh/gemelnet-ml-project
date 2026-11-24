@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Project Proposal – Gemel-Net</title>
+<style>
+  @page { size: A4; margin: 1.5cm 1.6cm; }
+  * { font-size: 11pt; }
+  body { font-family: "Times New Roman", Times, serif; line-height: 1.17; margin: 0; color: #000; }
+  body.genai { color: #c00000; }
+  h1 { font-weight: bold; text-align: center; margin: 0; }
+  .meta { text-align: center; margin: 0 0 6pt 0; }
+  h2 { font-weight: bold; margin: 5pt 0 1pt 0; }
+  p { margin: 0 0 3pt 0; text-align: justify; }
+  ul { margin: 0 0 3pt 0; padding-left: 14pt; }
+  li { margin: 0 0 1.5pt 0; text-align: justify; }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+
+<h1>Forecasting Top-Performing Israeli Provident Funds and Discovering Their Risk–Return Profiles</h1>
+<p class="meta">Roy Ashkenazi &nbsp;·&nbsp; Data Mining Course Project 2026 &nbsp;·&nbsp; GitHub: github.com/RoidoAsh/gemelnet-ml-project</p>
+
+<h2>1. Dataset Selection</h2>
+<p><b>Gemel-Net</b>, published by the Capital Market, Insurance and Savings Authority on data.gov.il
+(<a href="https://data.gov.il/he/datasets/cma/gemelnet">https://data.gov.il/he/datasets/cma/gemelnet</a>).
+It holds the monthly reports of every Israeli provident, study (<i>hishtalmut</i>) and severance fund track. After merging its three files, the data has
+<b>187,665 monthly records of 1,938 funds, from January 1999 to October 2026</b>. Each record has 31 columns:
+deposits, withdrawals and transfers; total assets; management fees; returns (monthly, year-to-date, 3-year and 5-year); standard deviation, Sharpe ratio and Alpha;
+liquidity; stock, foreign and foreign-currency exposures; and categorical fund type, specialization, managing company and target population.</p>
+
+<h2>2. Motivation</h2>
+<p>Israeli savers must choose among hundreds of fund tracks, usually by past returns, which are a weak guide.
+We ask two questions. <b>(1) Prediction:</b> can a fund's publicly reported profile at the end of a year (its fees, risk, flows, size, exposures and recent returns) predict whether it will rank in the
+<b>top quartile of its fund type next year</b>, better than simply picking last year's winners? <b>(2) Structure:</b> do funds actually behave as their declared specialization says,
+or do data-driven risk–return profiles reveal different groups? Both matter to savers, advisors and the regulator.</p>
+
+<h2>3. Method</h2>
+<ul>
+<li><b>Preprocessing (based on our EDA).</b> Merge the files and parse <i>INCEPTION_DATE</i>, which uses three different formats. Keep the data from 2010 on (before 2010 fees, exposures and risk metrics are mostly missing).
+Drop the deposit fee (80% missing). The risk metrics are missing for a structural reason: they are absent for almost all funds younger than 5 years and for only 7–12% of older funds.
+We will add fund age and missing-value indicators and compare imputation strategies. Exposures are reported in ₪ millions, so they will be converted to % of assets.</li>
+<li><b>Feature engineering.</b> Fund age, net flow / assets, return in excess of the fund type's median, return momentum (lagged returns), fee rank within the type, and log assets. In total there are more than 20 meaningful features.</li>
+<li><b>Target.</b> One December snapshot per fund and year (11,855 snapshots). The label is 1 if the fund's next calendar-year return is in the top 25% of its fund type in that year.
+The classes are 25/75 by construction, and no future information leaks into the features.</li>
+<li><b>Classification (at least 5 models).</b> Logistic Regression (baseline), Decision Tree, Random Forest, Gradient Boosting (XGBoost/LightGBM), SVM, k-Nearest Neighbors and an MLP.
+Hyperparameters will be tuned with expanding-window time-series cross-validation, and class imbalance handled with class weights.</li>
+<li><b>Clustering (at least 3 models).</b> K-Means, Agglomerative (Ward), Gaussian Mixture Models and DBSCAN, applied to standardized risk–return–exposure profiles
+(Sharpe, standard deviation, multi-horizon returns, % stocks, % foreign, fees) and visualized with PCA. Isolation Forest will be used as an optional anomaly-detection step,
+to flag funds that deviate from their declared policy.</li>
+</ul>
+
+<h2>4. Intended Experiments and Evaluation</h2>
+<ul>
+<li><b>Time-based split.</b> Train on 2010–2020 (5,951 snapshots), validate on 2021–2022 (1,164) and test once on 2023–2024 (1,252). A random split would leak the same funds and periods into both sets. Funds that close have no next-year label (survivorship bias); we will quantify and discuss this.</li>
+<li><b>Classification metrics.</b> ROC-AUC, PR-AUC, F1 and <i>precision@top-25%</i> (the share of the funds we pick that really end up in the top quartile). These will be compared with two baselines: a random pick (25%) and a "past winners" rule.</li>
+<li><b>Experiments.</b> (1) Compare all models. (2) Feature ablation: fees vs. risk vs. flows vs. past returns. (3) Compare missing-value strategies. (4) Interpret the models with feature importance and SHAP.
+(5) Analyze errors by fund type and by year, for example the 2022 market drawdown. (6) Test whether adding cluster membership as a feature improves the classifier.</li>
+<li><b>Clustering evaluation.</b> Choose the number of clusters with the elbow method, silhouette scores and BIC. Compare the models with Silhouette, Davies–Bouldin and Calinski–Harabasz scores.
+Measure agreement with the declared specialization (Adjusted Rand Index and a contingency table), and check how stable the clusters are across years.</li>
+</ul>
+
+</body>
+</html>
