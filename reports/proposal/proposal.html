@@ -1,62 +1,73 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>הצעת פרויקט – גמל-נט</title>
+<title>Project Proposal – Gemel-Net</title>
 <style>
-  @page { size: A4; margin: 1.3cm 1.5cm; }
+  @page { size: A4; margin: 1.5cm 1.7cm; }
   * { font-size: 11pt; }
-  body { font-family: Arial, "Arial Hebrew", sans-serif; line-height: 1.22; margin: 0; color: #000; text-align: right; }
+  body { font-family: "Times New Roman", Times, serif; line-height: 1.2; margin: 0; color: #000; }
   body.genai { color: #c00000; }
   h1 { font-weight: bold; text-align: center; margin: 0; }
-  .meta { text-align: center; margin: 0 0 6pt 0; }
-  h2 { font-weight: bold; margin: 5pt 0 1pt 0; }
+  .meta { text-align: center; margin: 0; }
+  .meta + .meta { margin-bottom: 6pt; }
+  h2 { font-weight: bold; margin: 6pt 0 2pt 0; }
   p { margin: 0 0 3pt 0; text-align: justify; }
-  ul { margin: 0 0 3pt 0; padding-right: 14pt; padding-left: 0; }
-  li { margin: 0 0 11pt 0; text-align: justify; }
+  ul { margin: 0; padding-left: 14pt; }
+  li { margin: 0 0 6pt 0; text-align: justify; }
   li:last-child { margin-bottom: 0; }
-  a { color: inherit; }
-  bdi { white-space: nowrap; }
+  a { color: inherit; text-decoration: none; }
+  .nowrap { white-space: nowrap; }
 </style>
 </head>
 <body>
 
-<h1>חיזוי קופות גמל מצטיינות בישראל וגילוי פרופילי סיכון-תשואה</h1>
-<p class="meta">רועי אשכנזי &nbsp;·&nbsp; פרויקט בקורס כריית נתונים 2026 &nbsp;·&nbsp; <bdi dir="ltr">GitHub: github.com/RoidoAsh/gemelnet-ml-project</bdi></p>
+<h1>Forecasting Top-Performing Israeli Provident Funds and Discovering Their Risk–Return Profiles</h1>
+<p class="meta">Roy Ashkenazi &nbsp;·&nbsp; Data Mining Course Project 2026</p>
+<p class="meta">GitHub: <a href="https://github.com/RoidoAsh/gemelnet-ml-project">https://github.com/RoidoAsh/gemelnet-ml-project</a></p>
 
-<h2>1. בחירת מאגר הנתונים</h2>
-<p style="text-align: right; margin-bottom: 1pt;"><b>גמל-נט</b>, שמפורסם על ידי רשות שוק ההון, ביטוח וחיסכון. קישור:
-<bdi dir="ltr"><a href="https://data.gov.il/he/datasets/cma/gemelnet">https://data.gov.il/he/datasets/cma/gemelnet</a></bdi></p>
-<p>המאגר מכיל את הדיווחים החודשיים של כל מסלולי קופות הגמל, קרנות ההשתלמות וקופות הפיצויים. אחרי איחוד שלושת הקבצים יש בדאטה
-<b>187,665 דיווחים חודשיים של 1,938 קופות, מינואר 1999 עד אוקטובר 2026</b>. בכל דיווח יש 31 עמודות: תזרימי כספים, סך נכסים, דמי ניהול, תשואות לכמה טווחי זמן, מדדי סיכון (סטיית תקן, שארפ ואלפא), נזילות, חשיפות, וגם סוג הקופה, התמחות, הגוף המנהל ואוכלוסיית היעד.</p>
+<h2>1. Dataset Selection</h2>
+<p style="text-align: left;"><b>Gemel-Net</b>, published by the Capital Market, Insurance and Savings Authority on data.gov.il:
+<a class="nowrap" href="https://data.gov.il/he/datasets/cma/gemelnet">https://data.gov.il/he/datasets/cma/gemelnet</a>.
+It contains the monthly reports of every Israeli provident fund, study fund and severance fund track. After merging its three files, the data has
+<b>187,665 monthly records of 1,938 funds, from January 1999 to October 2026</b>. Each record has 31 columns: cash flows, total assets, management fees,
+returns over several horizons, risk measures (standard deviation, Sharpe ratio, Alpha), liquidity, market exposures, and the fund's type, specialization,
+managing company and target population.</p>
 
-<h2>2. מוטיבציה</h2>
-<p>חוסכים בישראל בוחרים מבין מאות מסלולים, לרוב לפי התשואה בעבר, שהיא מדד חלש לעתיד. אנו שואלים שתי שאלות. <b>(1) חיזוי:</b> האם הפרופיל המדווח של קופה בסוף שנה (דמי ניהול, סיכון, תזרימים, גודל, חשיפות ותשואות אחרונות) מאפשר לחזות
-אם היא תהיה <b>ברבעון העליון בתשואה מבין הקופות מאותו סוג בשנה הבאה</b>, טוב יותר מבחירה פשוטה של "המנצחות של השנה שעברה"? <b>(2) מבנה:</b> האם הקופות
-מתנהגות בפועל לפי ההתמחות שהן מצהירות עליה, או שפרופילי סיכון-תשואה שעולים מהדאטה חושפים קבוצות אחרות? לתשובות יש ערך לחוסכים, ליועצים ולרגולטור.</p>
+<h2>2. Motivation</h2>
+<p>Israeli savers choose among hundreds of fund tracks, usually by past returns, which are a weak guide to the future. We ask two questions.
+<b>(1) Prediction:</b> can a fund's reported profile at the end of a year (fees, risk, cash flows, size, exposures and recent returns) predict whether it will be in the
+<b>top quartile of its fund type next year</b>, better than simply picking last year's winners? <b>(2) Structure:</b> do funds actually behave according to their declared
+specialization, or do data-driven risk–return profiles reveal different groups? The answers are useful to savers, advisors and the regulator.</p>
 
-<h2>3. שיטה</h2>
+<h2>3. Method</h2>
 <ul>
-<li><b>הכנת הנתונים.</b> נאחד את שלושת הקבצים לטבלה אחת ונתקן את תאריך הקמת הקופה, שמופיע בכל קובץ בפורמט אחר. נשתמש בנתונים מ-2010 ואילך, כי לפני כן רוב המדדים חסרים,
-ונוותר על דמי ההפקדה <span style="white-space: nowrap;">(<bdi dir="ltr">80%</bdi> חסרים)</span>. מדדי הסיכון חסרים בעיקר בקופות שגילן פחות מ-5 שנים. לכן נוסיף את גיל הקופה ועמודה שמסמנת ערך חסר, ונשווה בין כמה שיטות להשלמת ערכים חסרים. בנוסף נבצע נרמול (<bdi dir="ltr">Z-score</bdi>), קידוד <bdi dir="ltr">One-Hot</bdi> למשתנים הקטגוריים, וזיהוי ערכים חריגים בשיטת <bdi dir="ltr">IQR</bdi>.</li>
-<li><b>יצירת פיצ'רים חדשים.</b> גיל הקופה, תזרים הכספים ביחס לגודל הקופה, התשואה ביחס לקופות מאותו סוג, תשואות משנים קודמות, ואחוז החשיפה למניות ולחו"ל
-(בדאטה הן מדווחות במיליוני ₪ ולא באחוזים). בסך הכול יהיו יותר מ-20 פיצ'רים.</li>
-<li><b>משתנה המטרה.</b> לכל קופה ניקח את הדיווח של דצמבר בכל שנה (11,855 תצפיות). התווית תהיה 1 אם בשנה שאחריה הקופה הייתה ב-<bdi dir="ltr">25%</bdi> העליונים בתשואה מבין הקופות מאותו סוג, ו-0 אחרת.</li>
-<li><b>מודלי סיווג (7 מודלים).</b> רגרסיה לוגיסטית, <bdi dir="ltr">KNN</bdi>, עץ החלטה, <bdi dir="ltr">SVM</bdi>, <bdi dir="ltr">Random Forest</bdi>, <bdi dir="ltr">XGBoost</bdi> ורשת נוירונים. את ההיפר-פרמטרים של כל מודל נכוונן באמצעות <bdi dir="ltr">Grid Search</bdi> או <bdi dir="ltr">Randomized Search</bdi>.</li>
-<li><b>מודלי אשכולות (4 מודלים).</b> <bdi dir="ltr">K-Means</bdi>, אשכול היררכי (<bdi dir="ltr">Ward</bdi>), <bdi dir="ltr">DBSCAN</bdi> ו-<bdi dir="ltr">GMM</bdi>. האשכולות ייבנו לפי פרופיל הסיכון והתשואה של כל קופה (שארפ, סטיית תקן, תשואות, אחוז מניות, אחוז חו"ל ודמי ניהול). את התוצאות נציג בגרף דו-ממדי בעזרת <bdi dir="ltr">PCA</bdi> ו-<bdi dir="ltr">t-SNE</bdi>.
-כתוספת נבצע זיהוי אנומליות עם <bdi dir="ltr">LOF</bdi> ו-<bdi dir="ltr">Isolation Forest</bdi>, כדי למצוא קופות שמתנהגות אחרת מהקופות הדומות להן.</li>
+<li><b>Data preparation.</b> Merge the three files and fix the fund inception date, which uses a different format in each file. Use data from 2010 onward, since most measures
+are missing before then, and drop the deposit fee (80% missing). Risk measures are missing mainly for funds younger than 5 years, so we will add fund age and a missing-value
+indicator, and compare several imputation methods. We will also apply Z-score normalization, One-Hot encoding of categorical variables, and IQR-based outlier detection.</li>
+<li><b>Feature engineering.</b> Fund age, net cash flow relative to fund size, return relative to funds of the same type, returns of previous years, and stock and foreign
+exposure as a percentage of assets (the raw data reports them in ₪ millions). In total, more than 20 features.</li>
+<li><b>Target variable.</b> For each fund we take its December report of each year (11,855 December snapshots in total, of which 8,367 are from 2010–2024). The label is 1 if,
+in the following year, the fund's return was in the top 25% of funds of the same type, and 0 otherwise.</li>
+<li><b>Classification (7 models).</b> Logistic Regression, KNN, Decision Tree, SVM, Random Forest, XGBoost and a Neural Network. The hyperparameters of each model will be tuned
+with Grid Search or Randomized Search.</li>
+<li><b>Clustering (4 models).</b> K-Means, Hierarchical clustering (Ward), DBSCAN and GMM, applied to each fund's risk–return profile (Sharpe ratio, standard deviation, returns,
+% stocks, % foreign and fees). Results will be visualized in two dimensions with PCA and t-SNE. As an addition, we will run anomaly detection with LOF and Isolation Forest,
+to find funds that behave differently from similar funds.</li>
 </ul>
 
-<h2>4. ניסויים מתוכננים והערכה</h2>
+<h2>4. Intended Experiments and Evaluation</h2>
 <ul>
-<li><b>פיצול לפי זמן.</b> אימון על השנים 2010 עד 2020 (5,951 תצפיות), אימות על 2021 עד 2022 (1,164) ובדיקה על 2023 עד 2024 (1,252). פיצול אקראי היה גורם לזליגת נתונים (<bdi dir="ltr">data leakage</bdi>), כי אותן קופות ואותן שנים היו מופיעות גם באימון וגם בבדיקה.
-לקופות שנסגרו אין תווית לשנה הבאה (<bdi dir="ltr">survivorship bias</bdi>), ונבדוק את ההשפעה של זה.</li>
-<li><b>מדדי הערכה לסיווג.</b> מטריצת בלבול, <bdi dir="ltr">Accuracy</bdi>, <bdi dir="ltr">Precision</bdi>, <bdi dir="ltr">Recall</bdi>, <bdi dir="ltr">F1</bdi>, <bdi dir="ltr">Balanced Accuracy</bdi>, עקומת <bdi dir="ltr">ROC</bdi> ו-<bdi dir="ltr">AUC</bdi>, ועקומת <bdi dir="ltr">Precision-Recall</bdi>.
-המדד החשוב ביותר כאן הוא <bdi dir="ltr">Precision</bdi>: איזה חלק מהקופות שהמודל ממליץ עליהן באמת הגיע לרבעון העליון. נשווה את המודלים לשני מודלי בסיס: בחירה אקראית (<bdi dir="ltr">25%</bdi> הצלחה) ובחירה ב"מנצחות של השנה שעברה".</li>
-<li><b>ניסויים.</b> (1) השוואה בין כל מודלי הסיווג. (2) טיפול בחוסר האיזון בין המחלקות: <bdi dir="ltr">class weights</bdi> מול <bdi dir="ltr">SMOTE</bdi> מול <bdi dir="ltr">Tomek Links</bdi>. (3) השוואה בין שיטות להשלמת ערכים חסרים.
-(4) חשיבות הפיצ'רים (<bdi dir="ltr">feature importance</bdi>): אילו מאפיינים הכי משפיעים על החיזוי. (5) ניתוח שגיאות לפי סוג קופה ולפי שנה. (6) בדיקה אם הוספת האשכול של הקופה כפיצ'ר משפרת את הסיווג.</li>
-<li><b>הערכת האשכולות.</b> נבחר את מספר האשכולות לפי שיטת המרפק (<bdi dir="ltr">SSE / Elbow</bdi>), ציון <bdi dir="ltr">Silhouette</bdi> ודנדרוגרמה, ונשווה בין המודלים לפי ציון <bdi dir="ltr">Silhouette</bdi>.
-בנוסף נמדוד במדד <bdi dir="ltr">ARI</bdi> עד כמה האשכולות תואמים להתמחות שהקופות מצהירות עליה.</li>
+<li><b>Time-based split.</b> Train on 2010–2020 (5,951 snapshots), validate on 2021–2022 (1,164) and test on 2023–2024 (1,252). A random split would cause data leakage,
+because the same funds and years would appear in both training and testing. Funds that closed have no next-year label (survivorship bias); we will measure this effect.</li>
+<li><b>Classification metrics.</b> Confusion matrix, Accuracy, Precision, Recall, F1, Balanced Accuracy, the ROC curve and AUC, and the Precision–Recall curve.
+The key metric is Precision: the share of funds recommended by the model that actually reach the top quartile. Models will be compared with two baselines: a random pick
+(25% success) and picking last year's winners.</li>
+<li><b>Experiments.</b> (1) Compare all classification models. (2) Handle class imbalance: class weights vs. SMOTE vs. Tomek Links. (3) Compare imputation methods.
+(4) Feature importance: which characteristics drive the prediction most. (5) Error analysis by fund type and by year. (6) Test whether adding the fund's cluster as a feature
+improves classification.</li>
+<li><b>Clustering evaluation.</b> Choose the number of clusters with the elbow method (SSE), the Silhouette score and a dendrogram, and compare the models by Silhouette score.
+We will also use the Adjusted Rand Index (ARI) to measure how well the clusters match the funds' declared specialization.</li>
 </ul>
 
 </body>
